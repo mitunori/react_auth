@@ -1,16 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase";
 
 const Success = () => {
   const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(false);
 
   // 追加
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, (user) => {
       console.log(user, "user情報をチェック！");
       //userにはログインor登録されているかの状態がtrue/falseで入ってくるので、!userはfalse＝user情報がないとき!
+      user && setIsLogin(true);
       !user && navigate("/login");
     });
 
@@ -28,10 +30,14 @@ const Success = () => {
 
   return (
     <div>
-      <h1>Success</h1>
-      <div>成功した時に表示したい中身を記述してみましょう🤗</div>
-      {/* ログアウトのボタン */}
-      <button onClick={googleLogOut}>ログアウト</button>
+      {isLogin && (
+        <>
+          <h1>Success</h1>
+          <div>成功した時に表示したい中身を記述してみましょう🤗</div>
+          {/* ログアウトのボタン */}
+          <button onClick={googleLogOut}>ログアウト</button>
+        </>
+      )}
     </div>
   );
 };

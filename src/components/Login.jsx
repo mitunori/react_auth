@@ -5,8 +5,10 @@ import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
 const Login = () => {
+  // ページ遷移をさせる記述
   const navigate = useNavigate();
 
+  // グーグル認証のコード
   const googleLogIn = () => {
     const provider = new GoogleAuthProvider();
 
